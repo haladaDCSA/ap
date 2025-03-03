@@ -3,189 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>العراف</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>عرض تشغيل النماذج</title>
     <style>
-        body {
-            background-color: #111;
-            color: #fff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            direction: rtl;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
-
-        header {
-            text-align: right;
-            padding: 15px;
-            background-color: #222;
-            font-size: 20px;
-            font-weight: bold;
-            position: relative;
-        }
-
-        .menu-button {
-            position: absolute;
-            left: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .container {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
-            padding-bottom: 20px;
-        }
-
-        .chat-box {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding: 10px;
-            background-color: #222;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-        }
-
-        .chat-box input {
-            width: 70%;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-
-        .chat-box button {
-            padding: 10px;
-            background-color: #555;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-left: 10px;
-            font-size: 16px;
-        }
-
-        /* نافذة الكواكب */
-        .chart-container {
-            position: fixed;
-            top: 0;
-            left: -100%;
-            width: 80%;
-            height: 100vh;
-            background: #222;
-            transition: left 0.5s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .chart-container.active {
-            left: 0;
-        }
-
-        .planet-row {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .planet {
-            background: #333;
-            padding: 15px;
-            border-radius: 50%;
-            width: 100px;
-            height: 100px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-weight: bold;
-        }
-
-        .planet input {
-            margin-top: 5px;
-            width: 80%;
-            text-align: center;
-            padding: 5px;
-            border: none;
-            border-radius: 5px;
-        }
-
-        .close-button {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
+        body { font-family: Arial, sans-serif; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .running { color: green; }
+        .stopped { color: red; }
     </style>
 </head>
 <body>
-    <header>
-        <h1>العراف</h1>
-        <button class="menu-button" id="toggle-chart">&#9776;</button>
-    </header>
-
-    <div class="container">
-        <!-- المحتوى الرئيسي -->
+    <h1>حالة تشغيل النماذج</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>اسم النموذج</th>
+                <th>الحالة</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>incomplete-Llama-3.2-3B-Instruct-Q4_0.gguf</td>
+                <td class="running">قيد التشغيل</td>
+            </tr>
+            <tr>
+                <td>qwen2-1_5b-instruct-q4_0.gguf</td>
+                <td class="running">قيد التشغيل</td>
+            </tr>
+        </tbody>
+    </table>
+    <button onclick="location.reload();">تحديث الحالة</button>
+    <h2>مربع الدردشة</h2>
+    <div>
+        <textarea id="userInput" rows="4" cols="50" placeholder="اكتب سؤالك هنا..."></textarea>
+        <br />
+        <button onclick="sendMessage();">إرسال</button>
     </div>
-
-    <div class="chat-box">
-        <input type="text" placeholder="اكتب سؤالك هنا...">
-        <button>إرسال</button>
-    </div>
-    
-    <div class="chart-container" id="chart-container">
-        <button class="close-button" id="close-chart">&times;</button>
-        <div class="planet-row">
-            <div class="planet">الطالع <input type="text"></div>
-            <div class="planet">الشمس <input type="text"></div>
-            <div class="planet">القمر <input type="text"></div>
-            <div class="planet">عطارد <input type="text"></div>
-            <div class="planet">الزهرة <input type="text"></div>
-        </div>
-        <div class="planet-row">
-            <div class="planet">المريخ <input type="text"></div>
-            <div class="planet">المشتري <input type="text"></div>
-            <div class="planet">زحل <input type="text"></div>
-            <div class="planet">أورانوس <input type="text"></div>
-            <div class="planet">نبتون <input type="text"></div>
-        </div>
-        <div class="planet-row">
-            <div class="planet">بلوتو <input type="text"></div>
-        </div>
-    </div>
-
+    <h3>الردود:</h3>
+    <div id="responses"></div>
     <script>
-        document.getElementById("toggle-chart").addEventListener("click", function() {
-            document.getElementById("chart-container").classList.add("active");
-        });
-
-        document.getElementById("close-chart").addEventListener("click", function() {
-            document.getElementById("chart-container").classList.remove("active");
-        });
+        async function sendMessage() {
+            const userInput = document.getElementById('userInput').value;
+            if (!userInput.trim()) {
+                alert('الرجاء إدخال سؤال أو تعليق');
+                return;
+            }
+            const responsesDiv = document.getElementById('responses');
+            responsesDiv.innerHTML += '<p><strong>أنت:</strong> ' + userInput + '</p>';
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/ask', { // استبدل بالعنوان الصحيح للنموذج
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ question: userInput })
+                });
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                const data = await response.json();
+                if (!data.answer) {
+                    throw new Error('لم يتمكن النموذج من الاستجابة');
+                }
+                responsesDiv.innerHTML += '<p><strong>النموذج:</strong> ' + data.answer + '</p>';
+            } catch (error) {
+                console.error('Error:', error);
+                responsesDiv.innerHTML += '<p><strong>خطأ:</strong> ' + error.message + '</p>';
+            }
+            document.getElementById('userInput').value = '';
+        }
     </script>
 </body>
 </html>
