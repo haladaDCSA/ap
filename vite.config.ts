@@ -7,6 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
+<<<<<<< HEAD
   base: './',
   server: {
     port: 3000,
@@ -17,4 +18,6 @@ export default defineConfig({
     assetsDir: 'assets',
     emptyOutDir: true,
   }
+=======
+>>>>>>> bed8e3e48cb8ef902d070a341c525b2fad5edb92
 });
